@@ -84,8 +84,16 @@ func sendTxWithBackoff(
 		}
 
 		if _, err := rpc.WaitReceipt(ctx, cli.L1, tx); err != nil {
+			err = encoding.TryParsingCustomError(err)
 			log.Warn("Failed to wait till transaction executed", "blockID", blockID, "txHash", tx.Hash(), "error", err)
-			return err
+
+			if isSubmitProofTxErrorRetryable(err, blockID) {
+				log.Info("Retry sending TaikoL1.proveBlock transaction", "reason", err)
+				return err
+			}
+
+			isUnretryableError = true
+			return nil
 		}
 
 		return nil
