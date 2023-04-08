@@ -28,10 +28,6 @@ func isSubmitProofTxErrorRetryable(err error, blockID *big.Int, isOracle bool) b
 		return true
 	}
 
-	if isOracle && strings.HasPrefix(err.Error(), "L1_ID") {
-		return true
-	}
-
 	log.Warn("🤷‍♂️ Unretryable proof submission error", "error", err, "blockID", blockID)
 	return false
 }
