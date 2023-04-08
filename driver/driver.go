@@ -9,6 +9,7 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/event"
 	"github.com/ethereum/go-ethereum/log"
+	"github.com/taikoxyz/taiko-client/bindings/encoding"
 	chainSyncer "github.com/taikoxyz/taiko-client/driver/chain_syncer"
 	"github.com/taikoxyz/taiko-client/driver/state"
 	"github.com/taikoxyz/taiko-client/pkg/rpc"
@@ -60,7 +61,7 @@ func InitFromConfig(ctx context.Context, d *Driver, cfg *Config) (err error) {
 		L2EngineEndpoint: cfg.L2EngineEndpoint,
 		JwtSecret:        cfg.JwtSecret,
 	}); err != nil {
-		return err
+		return encoding.TryParsingCustomError(err)
 	}
 
 	if d.state, err = state.New(d.ctx, d.rpc); err != nil {
