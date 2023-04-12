@@ -108,7 +108,7 @@ func InitFromConfig(ctx context.Context, p *Prover, cfg *Config) (err error) {
 	)
 	p.proverAddress = crypto.PubkeyToAddress(p.cfg.L1ProverPrivKey.PublicKey)
 
-	chBufferSize := p.protocolConfigs.MaxNumBlocks.Uint64()
+	chBufferSize := 204800
 	p.blockProposedCh = make(chan *bindings.TaikoL1ClientBlockProposed, chBufferSize)
 	p.blockVerifiedCh = make(chan *bindings.TaikoL1ClientBlockVerified, chBufferSize)
 	p.proveValidProofCh = make(chan *proofProducer.ProofWithHeader, chBufferSize)
