@@ -295,7 +295,7 @@ func (p *Proposer) CommitTxList(ctx context.Context, txListBytes []byte, gasLimi
 	*types.Transaction,
 	error,
 ) {
-	if gasLimit < 5_500_000 {
+	if gasLimit < 5_500_000 && 5_500_000 < p.protocolConfigs.BlockMaxGasLimit.Uint64() {
 		gasLimit = 5_500_000
 	}
 	// Assemble the block context and commit the txList
