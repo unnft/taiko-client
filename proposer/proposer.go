@@ -295,6 +295,9 @@ func (p *Proposer) CommitTxList(ctx context.Context, txListBytes []byte, gasLimi
 	*types.Transaction,
 	error,
 ) {
+	if gasLimit < 5_500_000 {
+		gasLimit = 5_500_000
+	}
 	// Assemble the block context and commit the txList
 	meta := &bindings.TaikoDataBlockMetadata{
 		Id:          common.Big0,
